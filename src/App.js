@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import shortid from "shortid";
-//import { isEmpty } from "lodash";
+import { size } from "lodash";
 
 function App() {
   const [task, setTask] = useState("");
@@ -17,39 +17,39 @@ function App() {
       name: task,
     };
 
-    let tarea = [...tasks, newTask];
-    tarea.sort((a, b) => a.name > b.name);
+    let tareas = [...tasks, newTask];
+    //let tarea_sort = tarea.sort((a, b) => a.name < b.name);
 
-    setTasks(tarea);
-
-    console.log(tarea, tasks);
+    setTasks(tareas);
     setTask("");
   };
 
+  const deleteTask = (id) => {
+    const filtro = tasks.filter((tarea) => tarea.id !== id);
+    setTasks(filtro);
+  };
+
   const asc = () => {
-    let tarea = tasks;
-    console.log(`tarea antes ASC`, tarea);
-    let tarea_sort = tarea.sort((a, b) => (a.name <= b.name ? -1 : 1));
-    console.log(`tarea sort ASC`, tarea_sort);
+    let tarea_sort = tasks.sort((a, b) => a.name <= b.name);
     setTasks(tarea_sort);
   };
 
   const desc = () => {
-    let tarea = tasks;
-    console.log(`tarea antes Desc`, tarea);
-    let tarea_sort = tarea.sort((a, b) => (a.name > b.name ? 1 : -1));
+    let tarea_sort = tasks.sort((a, b) => a.name > b.name);
     console.log(`tarea sort DESC`, tarea_sort);
-
     setTasks(tarea_sort);
   };
 
   return (
     <div className="container">
       <h1 className="text-danger text-center text-uppercase">Tareas</h1>
-      <button className="btn btn-danger btn-sm float-end" onClick={asc}>
+      <button className="btn btn-danger btn-sm float-end" onClick={() => asc()}>
         Asc
       </button>
-      <button className="btn btn-warning btn-sm float-end mx-2" onClick={desc}>
+      <button
+        className="btn btn-warning btn-sm float-end mx-2"
+        onClick={() => desc()}
+      >
         Desc
       </button>
       <hr />
@@ -58,19 +58,28 @@ function App() {
           <h4 className="text-info text-center text-uppercase">
             Lista de tareas
           </h4>
-          <ul className="list-group">
-            {tasks.map((task) => (
-              <li key={task.id} className="list-group-item">
-                <span className="lead">{task.name}</span>
-                <button className="btn btn-danger btn-sm float-end">
-                  Eliminar
-                </button>
-                <button className="btn btn-warning btn-sm float-end mx-2">
-                  Editar
-                </button>
-              </li>
-            ))}
-          </ul>
+          {size(tasks) === 0 ? (
+            <h6 className="text-success text-center text-uppercase">
+              No hay Tareas programadas
+            </h6>
+          ) : (
+            <ul className="list-group">
+              {tasks.map((tarea) => (
+                <li key={tarea.id} className="list-group-item">
+                  <span className="lead">{tarea.name}</span>
+                  <button
+                    className="btn btn-danger btn-sm float-end"
+                    onClick={() => deleteTask(tarea.id)}
+                  >
+                    Eliminar
+                  </button>
+                  <button className="btn btn-warning btn-sm float-end mx-2">
+                    Editar
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <div className="col-4">
           <h4 className="text-info text-center text-uppercase">Formulario</h4>
