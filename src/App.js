@@ -6,6 +6,7 @@ import shortid from "shortid";
 import { size } from "lodash";
 
 function App() {
+  const _ = require("lodash");
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
 
@@ -18,9 +19,10 @@ function App() {
     };
 
     let tareas = [...tasks, newTask];
-    //let tarea_sort = tarea.sort((a, b) => a.name < b.name);
 
-    setTasks(tareas);
+    let tarea_sort = _.orderBy(tareas, "name", "asc");
+    setTasks(tarea_sort);
+
     setTask("");
   };
 
@@ -30,34 +32,43 @@ function App() {
   };
 
   const asc = () => {
-    let tarea_sort = tasks.sort((a, b) => a.name <= b.name);
+    let tarea_sort = _.orderBy(tasks, "name", "asc");
     setTasks(tarea_sort);
   };
 
   const desc = () => {
-    let tarea_sort = tasks.sort((a, b) => a.name > b.name);
-    console.log(`tarea sort DESC`, tarea_sort);
+    let tarea_sort = _.orderBy(tasks, "name", "desc");
     setTasks(tarea_sort);
   };
 
   return (
     <div className="container">
       <h1 className="text-danger text-center text-uppercase">Tareas</h1>
-      <button className="btn btn-danger btn-sm float-end" onClick={() => asc()}>
-        Asc
-      </button>
-      <button
-        className="btn btn-warning btn-sm float-end mx-2"
-        onClick={() => desc()}
-      >
-        Desc
-      </button>
       <hr />
       <div className="row">
         <div className="col-8">
           <h4 className="text-info text-center text-uppercase">
             Lista de tareas
           </h4>
+          <div className="row pb-2 ">
+            <div className="col-6 d-flex align-items-center justify-content-center">
+              <button
+                className="btn btn-danger btn-sm float-end"
+                onClick={() => asc()}
+              >
+                Orden Ascendente
+              </button>
+            </div>
+            <div className="col-6 d-flex align-items-center justify-content-center">
+              <button
+                className="btn btn-warning btn-sm float-end mx-2"
+                onClick={() => desc()}
+              >
+                Orden Descendente
+              </button>
+            </div>
+          </div>
+
           {size(tasks) === 0 ? (
             <h6 className="text-success text-center text-uppercase">
               No hay Tareas programadas
