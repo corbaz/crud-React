@@ -2,18 +2,56 @@ import React, { useState } from "react";
 //import logo from "./logo.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
+import shortid from "shortid";
 //import { isEmpty } from "lodash";
 
 function App() {
   const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState([]);
+
   const addTask = (e) => {
     e.preventDefault();
-    console.log(`OK`);
+
+    const newTask = {
+      id: shortid.generate(),
+      name: task,
+    };
+
+    let tarea = [...tasks, newTask];
+    tarea.sort((a, b) => a.name > b.name);
+
+    setTasks(tarea);
+
+    console.log(tarea, tasks);
     setTask("");
   };
+
+  const asc = () => {
+    let tarea = tasks;
+    console.log(`tarea antes ASC`, tarea);
+    let tarea_sort = tarea.sort((a, b) => (a.name <= b.name ? -1 : 1));
+    console.log(`tarea sort ASC`, tarea_sort);
+    setTasks(tarea_sort);
+  };
+
+  const desc = () => {
+    let tarea = tasks;
+    console.log(`tarea antes Desc`, tarea);
+    let tarea_sort = tarea.sort((a, b) => (a.name > b.name ? 1 : -1));
+    console.log(`tarea sort DESC`, tarea_sort);
+
+    setTasks(tarea_sort);
+  };
+
   return (
     <div className="container">
       <h1 className="text-danger text-center text-uppercase">Tareas</h1>
+      <button className="btn btn-danger btn-sm float-end" onClick={asc}>
+        Asc
+      </button>
+      <button className="btn btn-warning btn-sm float-end mx-2" onClick={desc}>
+        Desc
+      </button>
       <hr />
       <div className="row">
         <div className="col-8">
@@ -21,18 +59,17 @@ function App() {
             Lista de tareas
           </h4>
           <ul className="list-group">
-            <li className="list-group-item">
-              <span className="lead">Nombre de la tarea</span>
-              <button className="btn btn-danger btn-sm float-end" href="/">
-                Eliminar
-              </button>
-              <button
-                className="btn btn-warning btn-sm float-end mx-2"
-                href="/"
-              >
-                Editar
-              </button>
-            </li>
+            {tasks.map((task) => (
+              <li key={task.id} className="list-group-item">
+                <span className="lead">{task.name}</span>
+                <button className="btn btn-danger btn-sm float-end">
+                  Eliminar
+                </button>
+                <button className="btn btn-warning btn-sm float-end mx-2">
+                  Editar
+                </button>
+              </li>
+            ))}
           </ul>
         </div>
         <div className="col-4">
