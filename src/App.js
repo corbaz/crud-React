@@ -1,21 +1,46 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 //import logo from "./logo.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 import shortid from "shortid";
 import { size } from "lodash";
+import { addDocument, getCollection } from "./actions";
 
 function App() {
   const _ = require("lodash");
   const [task, setTask] = useState("");
   const [tasks, setTasks] = useState([]);
+  const [editMode, setEditMode] = useState(false);
+  const [id, setId] = useState("");
 
-  const addTask = (e) => {
+  useEffect(() => {
+    (async () => {
+      // al cargar la app
+      // carga los datos desde
+      // la db firebase la collecion "tasks" todos los documentos(c/u es un registro)
+      const result = await getCollection("tasks");
+      if (result.statusResponse) {
+        setTasks(result.data);
+        //asc();
+        console.log(`result`, result.data);
+      }
+    })();
+  }, []);
+
+  const addTask = async (e) => {
     e.preventDefault();
 
+    const result = await addDocument("tasks", { name: task.toUpperCase() });
+
+    if (!result.statusResponse) {
+      alert(result.error.message);
+      return;
+    }
+
     const newTask = {
-      id: shortid.generate(),
-      name: task,
+      // id: shortid.generate(),
+      id: result.data.id,
+      name: task.toUpperCase(),
     };
 
     let tareas = [...tasks, newTask];
@@ -29,6 +54,26 @@ function App() {
   const deleteTask = (id) => {
     const filtro = tasks.filter((tarea) => tarea.id !== id);
     setTasks(filtro);
+  };
+
+  const editTask = (tarea) => {
+    setTask(tarea.name);
+    setEditMode(true);
+    setId(tarea.id);
+  };
+
+  const saveTask = (e) => {
+    e.preventDefault();
+
+    const tareas_modify = tasks.map((item) =>
+      item.id === id ? { id: id, name: task } : item
+    );
+
+    setTasks(tareas_modify);
+
+    setEditMode(false);
+    setTask("");
+    setId("");
   };
 
   const asc = () => {
@@ -56,7 +101,7 @@ function App() {
                 className="btn btn-danger btn-sm float-end"
                 onClick={() => asc()}
               >
-                Orden Ascendente
+                Orden (1-A-Z)
               </button>
             </div>
             <div className="col-6 d-flex align-items-center justify-content-center">
@@ -64,15 +109,15 @@ function App() {
                 className="btn btn-warning btn-sm float-end mx-2"
                 onClick={() => desc()}
               >
-                Orden Descendente
+                Orden (Z-A-1)
               </button>
             </div>
           </div>
 
           {size(tasks) === 0 ? (
-            <h6 className="text-success text-center text-uppercase">
+            <li className="list-group-item text-white bg-success text-center text-uppercase rounded">
               No hay Tareas programadas
-            </h6>
+            </li>
           ) : (
             <ul className="list-group">
               {tasks.map((tarea) => (
@@ -84,7 +129,10 @@ function App() {
                   >
                     Eliminar
                   </button>
-                  <button className="btn btn-warning btn-sm float-end mx-2">
+                  <button
+                    className="btn btn-warning btn-sm float-end mx-2"
+                    onClick={() => editTask(tarea)}
+                  >
                     Editar
                   </button>
                 </li>
@@ -93,8 +141,10 @@ function App() {
           )}
         </div>
         <div className="col-4">
-          <h4 className="text-info text-center text-uppercase">Formulario</h4>
-          <form className="row g-3" onSubmit={addTask}>
+          <h4 className="text-info text-center text-uppercase">
+            {editMode ? "Modificar Tarea" : "Agregar Tarea"}
+          </h4>
+          <form className="row g-3" onSubmit={editMode ? saveTask : addTask}>
             <div className="col-md-12">
               <input
                 type="text"
@@ -106,8 +156,13 @@ function App() {
                 value={task}
               />
             </div>
-            <button className="btn btn-dark btn-block" type="submit">
-              Guardar
+            <button
+              className={
+                editMode ? "btn btn-danger btn-block" : "btn btn-dark btn-block"
+              }
+              type="submit"
+            >
+              {editMode ? "Modificar Tarea" : "Agregar Tarea"}
             </button>
           </form>
         </div>
