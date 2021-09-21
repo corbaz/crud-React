@@ -2,9 +2,14 @@ import React, { useState, useEffect } from "react";
 //import logo from "./logo.svg";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
-import shortid from "shortid";
+//import shortid from "shortid";
 import { size } from "lodash";
-import { addDocument, getCollection } from "./actions";
+import {
+  addDocument,
+  getCollection,
+  updateOneDocument,
+  deleteOneDocument,
+} from "./actions";
 
 function App() {
   const _ = require("lodash");
@@ -14,18 +19,20 @@ function App() {
   const [id, setId] = useState("");
 
   useEffect(() => {
+    // Metodo asyncrono auto ejecutable async/await ()()
     (async () => {
       // al cargar la app
       // carga los datos desde
       // la db firebase la collecion "tasks" todos los documentos(c/u es un registro)
       const result = await getCollection("tasks");
       if (result.statusResponse) {
-        setTasks(result.data);
+        const resultDataSort = _.orderBy(result.data, "name", "asc");
         //asc();
-        console.log(`result`, result.data);
+        setTasks(resultDataSort);
+        setId();
       }
     })();
-  }, []);
+  }, [_]);
 
   const addTask = async (e) => {
     e.preventDefault();
@@ -33,7 +40,7 @@ function App() {
     const result = await addDocument("tasks", { name: task.toUpperCase() });
 
     if (!result.statusResponse) {
-      alert(result.error.message);
+      alert(result.error);
       return;
     }
 
@@ -51,9 +58,19 @@ function App() {
     setTask("");
   };
 
-  const deleteTask = (id) => {
+  const deleteTask = async (id) => {
+    const result = await deleteOneDocument("Tasks", id);
+
+    if (!result.statusResponse) {
+      alert(result.error);
+      return;
+    }
+
     const filtro = tasks.filter((tarea) => tarea.id !== id);
     setTasks(filtro);
+    setEditMode(false);
+    setTask("");
+    setId("");
   };
 
   const editTask = (tarea) => {
@@ -62,14 +79,24 @@ function App() {
     setId(tarea.id);
   };
 
-  const saveTask = (e) => {
+  const saveTask = async (e) => {
     e.preventDefault();
 
-    const tareas_modify = tasks.map((item) =>
-      item.id === id ? { id: id, name: task } : item
+    const result = await updateOneDocument("tasks", id, {
+      name: task.toUpperCase(),
+    });
+
+    if (!result.statusResponse) {
+      alert(result.error);
+      return;
+    }
+
+    let taskModify = tasks.map((item) =>
+      item.id === id ? { id: id, name: task.toUpperCase() } : item
     );
 
-    setTasks(tareas_modify);
+    let tarea_sort = _.orderBy(taskModify, "name", "asc");
+    setTasks(tarea_sort);
 
     setEditMode(false);
     setTask("");
@@ -90,6 +117,9 @@ function App() {
     <div className="container">
       <h1 className="text-danger text-center text-uppercase">Tareas</h1>
       <hr />
+      <a href="/">
+        <img className="mt-2" src="/house.png" alt="Ir a Home"></img>
+      </a>
       <div className="row">
         <div className="col-8">
           <h4 className="text-info text-center text-uppercase">
@@ -98,7 +128,7 @@ function App() {
           <div className="row pb-2 ">
             <div className="col-6 d-flex align-items-center justify-content-center">
               <button
-                className="btn btn-danger btn-sm float-end"
+                className="btn btn-success btn-sm float-end"
                 onClick={() => asc()}
               >
                 Orden (1-A-Z)
@@ -106,7 +136,7 @@ function App() {
             </div>
             <div className="col-6 d-flex align-items-center justify-content-center">
               <button
-                className="btn btn-warning btn-sm float-end mx-2"
+                className="btn btn-info btn-sm float-end mx-2"
                 onClick={() => desc()}
               >
                 Orden (Z-A-1)
