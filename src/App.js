@@ -59,7 +59,7 @@ function App() {
   };
 
   const deleteTask = async (id) => {
-    const result = await deleteOneDocument("Tasks", id);
+    const result = await deleteOneDocument("tasks", id);
 
     if (!result.statusResponse) {
       alert(result.error);
@@ -68,6 +68,7 @@ function App() {
 
     const filtro = tasks.filter((tarea) => tarea.id !== id);
     setTasks(filtro);
+
     setEditMode(false);
     setTask("");
     setId("");

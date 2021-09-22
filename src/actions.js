@@ -95,12 +95,9 @@ export const deleteOneDocument = async (coleccion, id) => {
   try {
     // enlazamos el documento x id, de la coleccion(tasks), de la db de Firebase
 
-    //Actualizamos del enlace de response
-    //los datos nuevos (data) que son los campos del documento ecepto el id
-    //const response = doc(db, coleccion, id);
-    //await deleteDoc(response);
     //await db.collection(coleccion).doc(id).delete();
-    deleteDoc(doc(db, coleccion, id));
+    await deleteDoc(doc(db, coleccion, id));
+
     // armamos nuestro obj result con statusResponse: true
     result.statusResponse = true;
   } catch (error) {
