@@ -116,7 +116,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1 className="text-danger text-center text-uppercase">Productos</h1>
+      <h1 className="text-danger text-center text-uppercase">Productos 2021</h1>
       <hr />
       <a href="/">
         <img className="mt-2" src="/house.png" alt="Ir a Home"></img>
