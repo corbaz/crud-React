@@ -116,7 +116,7 @@ function App() {
 
   return (
     <div className="container">
-      <h1 className="text-danger text-center text-uppercase">Tareas</h1>
+      <h1 className="text-danger text-center text-uppercase">Productos</h1>
       <hr />
       <a href="/">
         <img className="mt-2" src="/house.png" alt="Ir a Home"></img>
@@ -124,7 +124,7 @@ function App() {
       <div className="row">
         <div className="col-8">
           <h4 className="text-info text-center text-uppercase">
-            Lista de tareas
+            Lista de Productos
           </h4>
           <div className="row pb-2 ">
             <div className="col-6 d-flex align-items-center justify-content-center">
@@ -147,7 +147,7 @@ function App() {
 
           {size(tasks) === 0 ? (
             <li className="list-group-item text-white bg-success text-center text-uppercase rounded">
-              No hay Tareas programadas
+              No hay Productos
             </li>
           ) : (
             <ul className="list-group">
@@ -173,7 +173,7 @@ function App() {
         </div>
         <div className="col-4">
           <h4 className="text-info text-center text-uppercase">
-            {editMode ? "Modificar Tarea" : "Agregar Tarea"}
+            {editMode ? "Modificar Producto" : "Agregar Producto"}
           </h4>
           <form className="row g-3" onSubmit={editMode ? saveTask : addTask}>
             <div className="col-md-12">
@@ -181,7 +181,7 @@ function App() {
                 type="text"
                 className="form-control"
                 id="validationCustom01"
-                placeholder="Ingrese la tarea"
+                placeholder="Ingrese un Producto"
                 required
                 onChange={(text) => setTask(text.target.value)}
                 value={task}
@@ -193,7 +193,7 @@ function App() {
               }
               type="submit"
             >
-              {editMode ? "Modificar Tarea" : "Agregar Tarea"}
+              {editMode ? "Modificar Producto" : "Agregar Producto"}
             </button>
           </form>
         </div>
