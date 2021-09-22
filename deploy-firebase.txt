@@ -1,0 +1,173 @@
+Microsoft Windows [Versión 10.0.19042.870]
+(c) 2020 Microsoft Corporation. Todos los derechos reservados.
+
+C:\www\0-crud>ncu
+Using yarn
+Checking C:\www\0-crud\package.json
+[====================] 11/11 100%
+
+All dependencies match the latest package versions :)
+
+C:\www\0-crud>yarn build
+yarn run v1.22.11
+$ react-scripts build
+(node:1828) [DEP0148] DeprecationWarning: Use of deprecated folder mapping "./" in the "exports" field 
+module resolution of the package at C:\www\0-crud\node_modules\postcss-safe-parser\node_modules\postcss\package.json.
+Update this package.json to use a subpath pattern like "./*".
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Creating an optimized production build...
+Compiled successfully.
+
+File sizes after gzip:
+
+  139.71 KB  build\static\js\2.e023abf7.chunk.js
+  23.55 KB   build\static\css\2.f2512455.chunk.css
+  2.11 KB    build\static\js\main.74739569.chunk.js
+  775 B      build\static\js\runtime-main.77abe55b.js
+  556 B      build\static\css\main.a617e044.chunk.css
+
+The project was built assuming it is hosted at /.
+You can control this with the homepage field in your package.json.
+
+The build folder is ready to be deployed.
+You may serve it with a static server:
+
+  yarn global add serve
+  serve -s build
+
+Find out more about deployment here:
+
+  https://cra.link/deployment
+
+Done in 17.03s.
+
+C:\www\0-crud>firebase login
+i  Firebase optionally collects CLI usage and error reporting information to help improve our products. Data is collected in accordance with Google's privacy policy (https://policies.google.com/privacy) and is not used to identify you.
+
+? Allow Firebase to collect CLI usage and error reporting information? Yes
+i  To change your data collection preference at any time, run `firebase logout` and log in again.      
+
+Visit this URL on this device to log in:
+https://accounts.google.com/o/oauth2/auth?client_id=563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com&scope=email%20openid%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloudplatformprojects.readonly%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Ffirebase%20https%3A%2F%2Fwww.googleapis.com%2Fauth%2Fcloud-platform&response_type=code&state=629169880&redirect_uri=http%3A%2F%2Flocalhost%3A9005  
+
+Waiting for authentication...
+
++  Success! Logged in as julio.corbaz@gmail.com
+
+C:\www\0-crud>firebase init
+
+     ######## #### ########  ######## ########     ###     ######  ########
+     ##        ##  ##     ## ##       ##     ##  ##   ##  ##       ##
+     ######    ##  ########  ######   ########  #########  ######  ######
+     ##        ##  ##    ##  ##       ##     ## ##     ##       ## ##
+     ##       #### ##     ## ######## ########  ##     ##  ######  ########
+
+You're about to initialize a Firebase project in this directory:
+
+  C:\www\0-crud
+
+Before we get started, keep in mind:
+
+  * You are currently outside your home directory
+
+? Are you ready to proceed? Yes
+? Which Firebase features do you want to set up for this directory? Press Space to select features, then Enter to confirm your choices. Firestore: Configure security rules and indexes files for Firestore, Hosting: Configure files for Firebase Hosting and (optionally) set up GitHub Action deploys
+
+=== Project Setup
+
+First, let's associate this project directory with a Firebase project.
+You can create multiple project aliases by running firebase use --add,
+but for now we'll just set up a default project.
+
+? Please select an option: Use an existing project
+? Select a default Firebase project for this directory: notebo-ok (notebo-OK)
+i  Using project notebo-ok (notebo-OK)
+
+=== Firestore Setup
+
+Firestore Security Rules allow you to define how and when to allow
+requests. You can keep these rules in your project directory
+and publish them with firebase deploy.
+
+? What file should be used for Firestore Rules? firestore.rules
+
+Firestore indexes allow you to perform complex queries while
+maintaining performance that scales with the size of the result
+set. You can keep index definitions in your project directory
+and publish them with firebase deploy.
+
+? What file should be used for Firestore indexes? firestore.indexes.json
+
+=== Hosting Setup
+
+Your public directory is the folder (relative to your project directory) that
+will contain Hosting assets to be uploaded with firebase deploy. If you
+have a build process for your assets, use your build's output directory.
+
+? What do you want to use as your public directory? build
+? Configure as a single-page app (rewrite all urls to /index.html)? Yes
+? Set up automatic builds and deploys with GitHub? Yes
+? File build/index.html already exists. Overwrite? Yes
++  Wrote build/index.html
+
+i  Detected a .git folder at C:\www\0-crud
+i  Authorizing with GitHub to upload your service account to a GitHub repository's secrets store.      
+
+Visit this URL on this device to log in:
+https://github.com/login/oauth/authorize?client_id=89cf50f02ac6aaed3484&state=561602311&redirect_uri=http%3A%2F%2Flocalhost%3A9005&scope=read%3Auser%20repo%20public_repo
+
+Waiting for authentication...
+
++  Success! Logged into GitHub as corbaz
+
+? For which GitHub repository would you like to set up a GitHub workflow? (format: user/repository) corbaz/crud-React
+
++  Created service account github-action-407310356 with Firebase Hosting admin permissions.
++  Uploaded service account JSON to GitHub as secret FIREBASE_SERVICE_ACCOUNT_NOTEBO_OK.
+i  You can manage your secrets at https://github.com/corbaz/crud-React/settings/secrets.
+
+? Set up the workflow to run a build script before every deploy? No
+
++  Created workflow file C:\www\0-crud\.github/workflows/firebase-hosting-pull-request.yml
+? Set up automatic deployment to your site's live channel when a PR is merged? (Y/n) Y
+? Set up automatic deployment to your site's live channel when a PR is merged? Yes
+? What is the name of the GitHub branch associated with your site's live channel? main
+
++  Created workflow file C:\www\0-crud\.github/workflows/firebase-hosting-merge.yml
+
+i  Action required: Visit this URL to revoke authorization for the Firebase CLI GitHub OAuth App:      
+https://github.com/settings/connections/applications/89cf50f02ac6aaed3484
+i  Action required: Push any new workflow file(s) to your repo
+
+i  Writing configuration info to firebase.json...
+i  Writing project information to .firebaserc...
+
++  Firebase initialization complete!
+
+C:\www\0-crud>
+
+C:\www\0-crud>
+
+C:\www\0-crud>firebase deploy
+
+=== Deploying to 'notebo-ok'...
+
+i  deploying firestore, hosting
+i  firestore: reading indexes from firestore.indexes.json...
+i  cloud.firestore: checking firestore.rules for compilation errors...
++  cloud.firestore: rules file firestore.rules compiled successfully
+i  firestore: latest version of firestore.rules already up to date, skipping upload...
++  firestore: deployed indexes in firestore.indexes.json successfully
+i  hosting[notebo-ok]: beginning deploy...
+i  hosting[notebo-ok]: found 19 files in build
++  hosting[notebo-ok]: file upload complete
++  firestore: released rules firestore.rules to cloud.firestore
+i  hosting[notebo-ok]: finalizing version...
++  hosting[notebo-ok]: version finalized
+i  hosting[notebo-ok]: releasing new version...
++  hosting[notebo-ok]: release complete
+
++  Deploy complete!
+
+Project Console: https://console.firebase.google.com/project/notebo-ok/overview
+Hosting URL: https://notebo-ok.web.app
