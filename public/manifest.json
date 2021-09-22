@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Crud Tareas Firebase",
+  "name": "React App - Crud Tareas Firebase ",
   "icons": [
     {
       "src": "favicon.ico",
