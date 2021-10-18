@@ -21,7 +21,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build Firebase": " yarn build & firebase deploy"
+    "build Firebase": " yarn build & firebase deploy",
+    "deploy gh-pages": "gh-pages -d ./build"
   },
   "eslintConfig": {
     "extends": [

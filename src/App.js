@@ -117,7 +117,7 @@ function App() {
   return (
     <div className="container">
       <h1 className="text-danger text-center text-uppercase">
-        Productos - 2021
+        Productos NoteboOK - 2021
       </h1>
       <hr />
       <a href="/">
